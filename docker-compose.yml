@@ -1,0 +1,24 @@
+# Démarrer : docker-compose up -d
+# Vérifier l'exécution : docker ps
+# Connexion : mysql -h 127.0.0.1 -P 3306 -u myuser -p
+# Mot de passe : mypassword
+# Arrêter : docker-compose down
+
+version: "3.9"
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_container
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: mydb
+      MYSQL_USER: myuser
+      MYSQL_PASSWORD: mypassword
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:

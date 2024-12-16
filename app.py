@@ -1,6 +1,8 @@
 from flask import Flask, request, jsonify
 import hmac
 
+import pymysql
+
 app = Flask(__name__)
 
 # Clé secrète pour la signature
@@ -29,9 +31,29 @@ def verify_signature(request):
     # Comparer les signatures
     return hmac.compare_digest(expected_signature, signature)
 
+# Paramètres de connexion MySQL
+db_settings = {
+    "host": "localhost",
+    "user": "myuser",
+    "password": "mypassword",
+    "database": "mydb"
+}
+
 @app.route('/')
 def home():
-    return "Bienvenue sur l'API Petzi !"
+    return "Bienvenue sur l'API MySQL avec Docker !"
+
+@app.route('/testdb', methods=["GET"])
+def test_db():
+    try:
+        connection = pymysql.connect(**db_settings)
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT NOW();")
+            result = cursor.fetchone()
+        connection.close()
+        return jsonify({"status": "connected", "current_time": result[0]})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 @app.route('/webhook', methods=['POST'])
 def webhook():
