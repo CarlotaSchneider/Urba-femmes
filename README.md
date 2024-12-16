@@ -15,7 +15,7 @@ python petzi_simulator.py http://127.0.0.1:5000/webhook
 
 ### 📊 Visualiser la base de données :
 ```bash
-http://127.0.0.1:5000/database
+http://127.0.0.1:5000/tickets
 ```
 
 ## 🐳 Base de données avec Docker Compose
