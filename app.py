@@ -100,23 +100,16 @@ def webhook():
     buyer = body.get('details', {}).get('buyer', {})
     buyer_name = f"{buyer.get('firstName', 'N/A')} {buyer.get('lastName', 'N/A')}"
 
-    # Statut (par exemple : "reçu", "confirmé", etc.)
+    # Statut
     status = "reçu"
 
     # Insérer dans la base
     if insert_ticket_to_db(ticket_number, ticket_title, ticket_category, ticket_price, buyer_name, status):
-        return f"""
-        <h1>Webhook traité avec succès !</h1>
-        <p><strong>Ticket Number:</strong> {ticket_number}</p>
-        <p><strong>Ticket Title:</strong> {ticket_title}</p>
-        <p><strong>Category:</strong> {ticket_category}</p>
-        <p><strong>Price:</strong> {ticket_price} CHF</p>
-        <p><strong>Buyer:</strong> {buyer_name}</p>
-        <p><strong>Status:</strong> {status}</p>
-        """
+        print("Donnees inserees avec succes dans la base de donnees.")
+        return jsonify({"message": "Webhook traite avec succes !"}), 200
     else:
+        print("Erreur lors de l'insertion dans la base de données.")
         return jsonify({"error": "Database insertion failed"}), 500
-
 
 if __name__ == '__main__':
     app.run(debug=True, host="127.0.0.1", port=5000)
