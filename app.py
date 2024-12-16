@@ -51,9 +51,9 @@ def insert_ticket_to_db(ticket_number, ticket_title, ticket_category, ticket_pri
 
 @app.route('/')
 def home():
-    return "Bienvenue sur l'API MySQL avec Flask!"
+    return "TicketHub"
 
-@app.route('/database', methods=["GET"])
+@app.route('/tickets', methods=["GET"])
 def view_data():
     try:
         connection = pymysql.connect(**db_settings)
