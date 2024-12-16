@@ -1,12 +1,46 @@
-# To do :
+# 🎟️ TicketHub App
 
-1. Il ne faut pas modifier le simulateur petzi
-2. L'app doit pouvoir afficher que le chargement est en attente ...
-* On se connecte à python petzi_simulator.py http://127.0.0.1:5000/webhook
-* Le serveur vérifie que c'est bien petzi qui se connecte (voir PETZI-Webhook.pdf)
-* Il persiste les données pour traitement / Il sauvegarde les données, idéalement pas en fichier json quoi...
-3. Le serveur affiche que les données ont bien été chargées
+---
 
-Demarrér le serveur: python app.py
-Lancer le webhook: python petzi_simulator.py http://127.0.0.1:5000/webhook
-Visualiser la bd: http://127.0.0.1:5000/database
+## 🚀 Démarrer le serveur :
+
+```bash
+python app.py
+
+## 🛠️ Lancer le webhook (pour créer une commande) :
+```bash
+python petzi_simulator.py http://127.0.0.1:5000/webhook
+
+### 📊 Visualiser la base de données :
+```bash
+http://127.0.0.1:5000/database
+
+## 🐳 Base de données avec Docker Compose
+### Démarrer : 
+```bash
+docker-compose up -d
+
+### Vérifier l'exécution : 
+```bash
+docker ps
+
+### Connexion : 
+```bash
+mysql -h 127.0.0.1 -P 3306 -u myuser -p
+
+### Mot de passe : 
+```bash
+mypassword
+
+### Arrêter : 
+```bash
+docker-compose down
+
+### 📄 Voir les données de la table:
+```bash 
+SELECT * FROM tickets;
+
+### 🗑️ Supprimer les données de la table: 
+```bash
+DELETE FROM tickets;
+
