@@ -4,6 +4,9 @@
 # Mot de passe : mypassword
 # Arrêter : docker-compose down
 
+# Voir les données de la table: SELECT * FROM tickets;
+# Supprimer les données de la table: DELETE FROM tickets;
+
 version: "3.9"
 
 services:

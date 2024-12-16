@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 import hmac
 import pymysql
+import json  # Pour convertir la charge utile en JSON
 
 app = Flask(__name__)
 
@@ -32,16 +33,16 @@ db_settings = {
     "database": "mydb"
 }
 
-def insert_ticket_to_db(ticket_number, ticket_title, ticket_category, ticket_price, buyer_name, status):
+def insert_ticket_to_db(ticket_number, ticket_title, ticket_category, ticket_price, buyer_name, status, json_payload):
     try:
         connection = pymysql.connect(**db_settings)
         with connection.cursor() as cursor:
             # Préparer la requête SQL pour insérer les données
             sql_query = """
-            INSERT INTO tickets (number, title, category, price, buyer_name, status) 
-            VALUES (%s, %s, %s, %s, %s, %s)
+            INSERT INTO tickets (number, title, category, price, buyer_name, status, json)
+            VALUES (%s, %s, %s, %s, %s, %s, %s)
             """
-            cursor.execute(sql_query, (ticket_number, ticket_title, ticket_category, ticket_price, buyer_name, status))
+            cursor.execute(sql_query, (ticket_number, ticket_title, ticket_category, ticket_price, buyer_name, status, json_payload))
             connection.commit()
         connection.close()
         return True
@@ -71,7 +72,8 @@ def view_data():
                 "Category": row[3],
                 "Price": float(row[4]),
                 "Buyer Name": row[5],
-                "Status": row[6]
+                "Status": row[6],
+                "Created At": row[8]  # Inclure la date/heure
             })
         
         # Afficher dans le navigateur
@@ -103,13 +105,17 @@ def webhook():
     # Statut
     status = "reçu"
 
+    # Convertir la charge utile en JSON pour la sauvegarde
+    json_payload = json.dumps(body)  # Transformer la totalité de la requête en JSON
+
     # Insérer dans la base
-    if insert_ticket_to_db(ticket_number, ticket_title, ticket_category, ticket_price, buyer_name, status):
+    if insert_ticket_to_db(ticket_number, ticket_title, ticket_category, ticket_price, buyer_name, status, json_payload):
         print("Donnees inserees avec succes dans la base de donnees.")
         return jsonify({"message": "Webhook traite avec succes !"}), 200
     else:
-        print("Erreur lors de l'insertion dans la base de données.")
+        print("Erreur lors de l'insertion dans la base de donnees.")
         return jsonify({"error": "Database insertion failed"}), 500
+
 
 if __name__ == '__main__':
     app.run(debug=True, host="127.0.0.1", port=5000)
