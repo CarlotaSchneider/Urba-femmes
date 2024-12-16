@@ -188,7 +188,7 @@ def home():
                 </div>
             </div>
             <footer>
-                &copy; 2023 - TicketHub - Développé avec passion
+                &copy; 2024 - TicketHub - Développé avec passion
             </footer>
         </body>
         </html>
