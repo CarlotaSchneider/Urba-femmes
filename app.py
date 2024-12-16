@@ -61,9 +61,21 @@ def view_data():
             cursor.execute("SELECT * FROM tickets")
             rows = cursor.fetchall()
             connection.close()
+
+        # Transformer les données en dictionnaire avec des clés explicites
+        tickets = []
+        for row in rows:
+            tickets.append({
+                "Ticket Number": row[1],
+                "Title": row[2],
+                "Category": row[3],
+                "Price": float(row[4]),
+                "Buyer Name": row[5],
+                "Status": row[6]
+            })
         
         # Afficher dans le navigateur
-        return jsonify(rows)
+        return jsonify(tickets)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
