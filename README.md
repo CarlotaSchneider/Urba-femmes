@@ -46,6 +46,8 @@ docker-compose down
 
 ### 📄 Voir les données de la table:
 ```bash 
+SHOW DATABASES ;
+USE mydb ;
 SELECT * FROM tickets;
 ```
 
