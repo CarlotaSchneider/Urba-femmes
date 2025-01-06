@@ -31,7 +31,7 @@ docker ps
 
 ### Connexion : 
 ```bash
-mysql -h 127.0.0.1 -P 3306 -u myuser -p
+docker exec -it mysql_container mysql -u myuser -p
 ```
 
 ### Mot de passe : 
