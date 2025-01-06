@@ -247,7 +247,7 @@ def webhook():
         json_payload = json.dumps(body)
 
         if insert_ticket_to_db(ticket_number, ticket_title, ticket_category, ticket_price, buyer_name, status, json_payload):
-            return jsonify({"message": "Webhook traité avec succès"}), 200
+            return jsonify({"message": "Webhook traite avec succes"}), 200
         else:
             return jsonify({"error": "Erreur lors de l'insertion dans la base"}), 500
     except Exception as e:
